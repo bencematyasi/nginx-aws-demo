@@ -16,8 +16,12 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-region: ${{ secrets.AWS_REGION }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      - run: npm install
-      - uses: pulumi/actions@v3
+      - name: Clean install of depedencies
+        run: npm ci
+      - name: Change working directory for pulumi preview
+        working-directory: ./infra
+      - name: Run pulumi preview on dev stack
+        uses: pulumi/actions@v3
         with:
           command: preview --stack dev
           stack-name: dev
