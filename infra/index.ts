@@ -7,7 +7,7 @@ import secretService = require('./secret-retriever.service');
 const stack = pulumi.getStack()
 
 
-const EXPOSED_PORT = parseInt(process.env.EXPOSED_PORT as string);
+const EXPOSED_PORT = parseInt(process.env.EXPOSED_PORT as string) || 80;
 console.log(EXPOSED_PORT)
 const AWS_REGION = process.env.AWS_REGION
 console.log(AWS_REGION)
