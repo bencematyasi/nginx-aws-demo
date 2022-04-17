@@ -1,3 +1,3 @@
 name: nginx-aws-demo
 runtime: nodejs
-description: A minimal AWS TypeScript Pulumi program
+description: A minimal AWS TypeScript Pulumi program for deploying docker image through Pulumi that is triggered on GitHub Action
