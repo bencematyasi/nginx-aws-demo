@@ -23,7 +23,7 @@ jobs:
       - name: Run pulumi preview on dev stack
         uses: pulumi/actions@v3
         with:
-          command: up --stack dev
+          command: up
           stack-name: dev
         env:
           PULUMI_ROOT: ./infra
