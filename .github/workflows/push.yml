@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - master
-defaults:
-  run:
-    working-directory: ./infra
 jobs:
   preview:
     name: Preview
@@ -22,9 +19,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Clean install of depedencies in root folder
-        run: |
-          cd..
-          npm ci
+        run: npm ci
       - name: Run pulumi preview on dev stack
         uses: pulumi/actions@v3
         with:
