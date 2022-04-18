@@ -1,7 +1,7 @@
 name: Build and deploy
 on:
   push:
-    branches: [master, dev]
+    branches: [master]
 jobs:
   build:
     name: Pulumi up, creating new/updating resources and deploy the app
