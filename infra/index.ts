@@ -22,9 +22,9 @@ const atg = alb.createTargetGroup("app-tg", { port: EXPOSED_PORT, deregistration
 //Creating Listener for TargetGroup and setting port 
 const web = atg.createListener("web", { port: EXPOSED_PORT });
 
-//secretService.getSecretAndWriteFile(AWS_SERVER_ACCESS_SECRET_NAME);
+secretService.getSecretAndWriteFile(AWS_SERVER_ACCESS_SECRET_NAME);
 
-//const containerImage = awsx.ecs.Image.fromPath('app-img', '../app')
+const containerImage = awsx.ecs.Image.fromPath('app-img', '../app')
 
 const appService = new awsx.ecs.FargateService('app-svc', {
     cluster,
