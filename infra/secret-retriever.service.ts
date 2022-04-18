@@ -1,15 +1,9 @@
 
-import * as AWS from 'aws-sdk'
 import * as fs from 'fs'
-
-const client = new AWS.SecretsManager({
-    region: process.env.AWS_REGION || "eu-west-2",
-});
-
-
+import * as aws from "@pulumi/aws";
 
 function getAwsSecretValueFromClient(secretName: string) {
-    return client.getSecretValue({ SecretId: secretName }).promise();
+    return aws.secretsmanager.getSecretVersion({ secretId: secretName });
 }
 
 async function getAwsSecretAsync(secretName: string) {
@@ -38,8 +32,8 @@ function writeSecretIntoFile(secretObject: any) {
 export async function getSecretAndWriteFile(secretName?: string) {
     if (secretName) {
         const secret = await getAwsSecretAsync(secretName);
-        if (secret?.SecretString) {
-            var secretObject = JSON.parse(secret.SecretString)["SERVERACCESS"].split(",");
+        if (secret?.secretString) {
+            var secretObject = JSON.parse(secret.secretString)["SERVERACCESS"].split(",");
             writeSecretIntoFile(secretObject)
         }
     }
