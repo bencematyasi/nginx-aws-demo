@@ -1,4 +1,4 @@
-## NINGX-AWS Demo - _not so official readme_
+## NGINX-AWS Demo - _not so official readme_
 - It is a demo project for demonstraing usage of Pulumi as IaC to deploy or update existing resources the code demands from AWS to do.
 - The project is a nginx webserver protected with .htpasswd with custom html.
 - All server access credentials are placed on AWS Secret Manager
