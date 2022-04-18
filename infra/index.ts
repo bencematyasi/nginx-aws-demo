@@ -7,12 +7,8 @@ import secretService = require('./secret-retriever.service');
 const stack = pulumi.getStack()
 
 
-const EXPOSED_PORT = parseInt(process.env.EXPOSED_PORT as string) || 80;
-console.log(EXPOSED_PORT)
-const AWS_REGION = process.env.AWS_REGION
-console.log(AWS_REGION)
+const EXPOSED_PORT = parseInt(process.env.AWS_EXPOSED_PORT as string) || 80;
 const AWS_SERVER_ACCESS_SECRET_NAME = process.env.AWS_SERVER_ACCESS_SECRET_NAME
-console.log(AWS_SERVER_ACCESS_SECRET_NAME)
 
 //Creating ECS Cluster with name prefix os cluster.
 const cluster = new awsx.ecs.Cluster("cluster", {})
@@ -26,9 +22,9 @@ const atg = alb.createTargetGroup("app-tg", { port: EXPOSED_PORT, deregistration
 //Creating Listener for TargetGroup and setting port 
 const web = atg.createListener("web", { port: EXPOSED_PORT });
 
-secretService.getSecretAndWriteFile(AWS_SERVER_ACCESS_SECRET_NAME);
+//secretService.getSecretAndWriteFile(AWS_SERVER_ACCESS_SECRET_NAME);
 
-const containerImage = awsx.ecs.Image.fromPath('app-img', '../app')
+//const containerImage = awsx.ecs.Image.fromPath('app-img', '../app')
 
 const appService = new awsx.ecs.FargateService('app-svc', {
     cluster,
@@ -40,7 +36,5 @@ const appService = new awsx.ecs.FargateService('app-svc', {
     },
     desiredCount: 1,
 })
-
-//secretService.removeFile();
 
 export const url = pulumi.interpolate`${web.endpoint.hostname}`
