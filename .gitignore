@@ -14,4 +14,4 @@
 .venv
 
 # Htpasswd
-.htpasswd
+#.htpasswd
