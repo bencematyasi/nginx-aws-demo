@@ -20,9 +20,9 @@ import * as infra from "./index";
 describe("Infrastructure", function () {
 
     describe("#web", function () {
-        const web = infra.web;
+        const listenerPort = infra.listenerPort;
         it('verifies that ApplicationListener is listening on the proper port', async () => {
-            pulumi.all([web.listener.port]).apply(([port]) => {
+            pulumi.all([listenerPort]).apply(([port]) => {
                 assert.strictEqual(port, 80)
             })
 
@@ -30,9 +30,9 @@ describe("Infrastructure", function () {
     });
 
     describe("#cluster", function () {
-        const cluster = infra.cluster;
+        const cluterName = infra.cluterName;
         it('verifies that cluster has a name', async () => {
-            pulumi.all([cluster.cluster.name]).apply(([name]) => {
+            pulumi.all([cluterName]).apply(([name]) => {
                 assert.strictEqual(name, "cluster")
             })
 

@@ -5,10 +5,10 @@ import secretService = require('./secret-retriever.service');
 const stack = pulumi.getStack()
 
 const EXPOSED_PORT = parseInt(process.env.AWS_EXPOSED_PORT as string) || 80;
-const AWS_SERVER_ACCESS_SECRET_NAME = process.env.AWS_SERVER_ACCESS_SECRET_NAME;
+const AWS_SERVER_ACCESS_SECRET_NAME = process.env.AWS_SERVER_ACCESS_SECRET_NAME
 
 //Creating ECS Cluster with name prefix os cluster.
-export const cluster = new awsx.ecs.Cluster("cluster", { name: "cluster" });
+const cluster = new awsx.ecs.Cluster("cluster", { name: "cluster" });
 
 //Creating Application LoadBalancer that is exposed to the internet, single point of access.
 const alb = new awsx.elasticloadbalancingv2.ApplicationLoadBalancer("app-lb", { external: true, securityGroups: cluster.securityGroups });
@@ -17,7 +17,7 @@ const alb = new awsx.elasticloadbalancingv2.ApplicationLoadBalancer("app-lb", { 
 const atg = alb.createTargetGroup("app-tg", { port: EXPOSED_PORT, deregistrationDelay: 0 });
 
 //Creating Listener for TargetGroup and setting port 
-export const web = atg.createListener("web", { port: EXPOSED_PORT });
+const web = atg.createListener("web", { port: EXPOSED_PORT });
 
 //Getting ServerAccess secret, write it to a file what docker build will use
 secretService.getSecretAndWriteFile(AWS_SERVER_ACCESS_SECRET_NAME);
@@ -39,3 +39,5 @@ const appService = new awsx.ecs.FargateService('app-svc', {
 });
 
 export const url = pulumi.interpolate`${web.endpoint.hostname}`;
+export const listenerPort = web.listener.port;
+export const cluterName = cluster.cluster.name;
