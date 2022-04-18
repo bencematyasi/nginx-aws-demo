@@ -24,6 +24,9 @@ jobs:
       - name: Clean install of depedencies in root folder
         run: npm ci
 
+      - name: Install Pulumi CLI
+        uses: pulumi/action-install-pulumi-cli@v1.0.1
+        
       - name: Run pulumi preview on dev stack
         uses: pulumi/actions@v3
         with:
