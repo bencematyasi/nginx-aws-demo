@@ -1,13 +1,18 @@
 {
     "name": "nginx-aws-demo",
+    "scripts": {
+        "test": "mocha -r ts-node/register ./infra/infra-tests.ts"
+    },
     "devDependencies": {
+        "@types/mocha": "^9.1.0",
         "@types/node": "^14"
     },
     "dependencies": {
-        "@pulumi/pulumi": "^3.0.0",
         "@pulumi/aws": "^5.1.2",
         "@pulumi/awsx": "^0.40.0",
         "@pulumi/docker": "^3.2.0",
-        "aws-sdk": "^2.1116.0"
+        "@pulumi/pulumi": "^3.0.0",
+        "mocha": "^9.2.2",
+        "ts-node": "^10.7.0"
     }
 }
