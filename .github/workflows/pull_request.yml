@@ -1,7 +1,7 @@
 name: Pulumi build
 on:
   pull_request:
-    branches: [master, development]
+    branches: [master, dev]
 jobs:
   preview-build:
     name: Pulumi preview build to see the the desired changes in the ifrasturcture
