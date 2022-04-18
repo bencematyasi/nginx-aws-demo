@@ -3,8 +3,29 @@ on:
   pull_request:
     branches: [master, dev]
 jobs:
+  run-tests:
+    name: Run unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 14.x
+
+      - name: Install mocha for ts
+        run: npm install mocha @types/mocha ts-node
+
+      - name: Clean install all dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test # command is defined package.json
+
   preview-build:
     name: Pulumi preview build to see the the desired changes in the ifrasturcture
+    needs: run-tests # all tests should pass otherwise this will not get triggered
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -26,7 +47,7 @@ jobs:
 
       - name: Install Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
-        
+
       - name: Run pulumi preview on dev stack
         uses: pulumi/actions@v3
         with:

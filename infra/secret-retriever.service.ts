@@ -17,13 +17,13 @@ async function getAwsSecretAsync(secretName: string) {
 //Writing the ServerAccess into a .htpasswd that docker build will use
 function writeSecretIntoFile(secretObject: any) {
     if (secretObject) {
-        const file = fs.createWriteStream("../app/.htpasswd")
+        const file = fs.createWriteStream("../app/.htpasswd");
 
         secretObject.forEach((element: any) => {
-            file.write(`${element}\n`)
+            file.write(`${element}\n`);
         });
 
-        file.close()
+        file.close();
     }
 }
 
@@ -33,8 +33,8 @@ export async function getSecretAndWriteFile(secretName?: string) {
         const secret = await getAwsSecretAsync(secretName);
         if (secret?.secretString) {
             var secretObject = JSON.parse(secret.secretString)["SERVERACCESS"].split(",");
-            return writeSecretIntoFile(secretObject)
+            return writeSecretIntoFile(secretObject);
         }
     }
-    return console.log("No secret name was defined")
+    return console.log("No secret name was defined");
 }
