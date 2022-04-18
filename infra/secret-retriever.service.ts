@@ -3,7 +3,7 @@ import * as AWS from 'aws-sdk'
 import * as fs from 'fs'
 
 const client = new AWS.SecretsManager({
-    region: process.env.AWS_REGION,
+    region: process.env.AWS_REGION || "eu-west-2",
 });
 
 
