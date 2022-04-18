@@ -3,7 +3,7 @@ import * as AWS from 'aws-sdk'
 import * as fs from 'fs'
 
 const client = new AWS.SecretsManager({
-    region: 'eu-west-2',
+    region: process.env.AWS_REGION,
 });
 
 
@@ -36,7 +36,6 @@ function writeSecretIntoFile(secretObject: any) {
 }
 
 export async function getSecretAndWriteFile(secretName?: string) {
-    //process.env.SERVERACCESS
     if (secretName) {
         const secret = await getAwsSecretAsync(secretName);
         if (secret?.SecretString) {
