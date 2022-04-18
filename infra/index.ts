@@ -6,7 +6,7 @@ const stack = pulumi.getStack()
 
 
 const EXPOSED_PORT = parseInt(process.env.AWS_EXPOSED_PORT as string) || 80;
-const AWS_SERVER_ACCESS_SECRET_NAME = process.env.AWS_SERVER_ACCESS_SECRET_NAME
+const AWS_SERVER_ACCESS_SECRET_NAME = process.env.AWS_SERVER_ACCESS_SECRET_NAME || "arn:aws:secretsmanager:eu-west-2:778643184450:secret:prod/serveraccess-eoMxHD"
 
 //Creating ECS Cluster with name prefix os cluster.
 const cluster = new awsx.ecs.Cluster("cluster", {})
