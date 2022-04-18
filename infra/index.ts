@@ -6,10 +6,10 @@ const stack = pulumi.getStack()
 
 
 const EXPOSED_PORT = parseInt(process.env.AWS_EXPOSED_PORT as string) || 80;
-const AWS_SERVER_ACCESS_SECRET_NAME = process.env.AWS_SERVER_ACCESS_SECRET_NAME || "arn:aws:secretsmanager:eu-west-2:778643184450:secret:prod/serveraccess-eoMxHD"
+const AWS_SERVER_ACCESS_SECRET_NAME = process.env.AWS_SERVER_ACCESS_SECRET_NAME;
 
 //Creating ECS Cluster with name prefix os cluster.
-const cluster = new awsx.ecs.Cluster("cluster", {})
+const cluster = new awsx.ecs.Cluster("cluster", {});
 
 //creating Application LoadBalancer that is exposed to the internet, single point of access.
 const alb = new awsx.elasticloadbalancingv2.ApplicationLoadBalancer("app-lb", { external: true, securityGroups: cluster.securityGroups });
@@ -22,7 +22,7 @@ const web = atg.createListener("web", { port: EXPOSED_PORT });
 
 secretService.getSecretAndWriteFile(AWS_SERVER_ACCESS_SECRET_NAME);
 
-const containerImage = awsx.ecs.Image.fromPath('app-img', '../app')
+const containerImage = awsx.ecs.Image.fromPath('app-img', '../app');
 
 const appService = new awsx.ecs.FargateService('app-svc', {
     cluster,
@@ -33,6 +33,6 @@ const appService = new awsx.ecs.FargateService('app-svc', {
         },
     },
     desiredCount: 1,
-})
+});
 
-export const url = pulumi.interpolate`${web.endpoint.hostname}`
+export const url = pulumi.interpolate`${web.endpoint.hostname}`;
