@@ -1,6 +1,7 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as awsx from "@pulumi/awsx";
 import secretService = require('./secret-retriever.service');
+require('dotenv').config()
 
 const stack = pulumi.getStack()
 
